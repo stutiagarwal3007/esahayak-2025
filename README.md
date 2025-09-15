@@ -3,7 +3,7 @@
 A lightweight Buyer Lead Intake & Management app built with Vite + React + TypeScript + shadcn-ui + Tailwind CSS + Supabase.
 It allows capturing, listing, searching, editing, and managing buyer leads with validation, history tracking, and CSV import/export.
 
-🚀 Tech Stack
+**Tech Stack**
 
 Frontend: Vite
  + React
@@ -23,160 +23,120 @@ CSV Handling: Papaparse (or custom util)
 
 Testing: Vitest (unit tests)
 
-📦 Features
-Buyers (Leads)
+**Features**
+*Buyers (Leads)*
 
-Capture buyer details with Zod-based validation (client + server).
+-Capture buyer details with Zod-based validation (client + server).
 
-Enums for city, propertyType, bhk, purpose, timeline, source, status.
+-Enums for city, propertyType, bhk, purpose, timeline, source, status.
 
-Ownership: users can only edit/delete their own buyers (ownerId).
+-Ownership: users can only edit/delete their own buyers (ownerId).
 
-Buyer history table tracks last 5 changes (field, old → new, timestamp, user).
+-Buyer history table tracks last 5 changes (field, old → new, timestamp, user).
 
-Pages & Flows
+*Pages & Flows*
 
-Create Lead – /buyers/new
+-Create Lead – /buyers/new
 
-Form with validation: name, phone, city, propertyType, etc.
+  Form with validation: name, phone, city, propertyType, etc.
+  
+  Conditional field: bhk required only for Apartment/Villa.
+  
+  On submit → creates record + buyer_history entry.
 
-Conditional field: bhk required only for Apartment/Villa.
+-List & Search – /buyers
 
-On submit → creates record + buyer_history entry.
+  Server-side pagination (10/page).
+  
+  Filters synced to URL (city, propertyType, status, timeline).
+  
+  Debounced search (fullName|phone|email).
+  
+  Sort by updatedAt desc.
+  
+  Row actions: View / Edit.
 
-List & Search – /buyers
+-View & Edit – /buyers/[id]
 
-Server-side pagination (10/page).
+  Edit form with same validation rules.
+  
+  Optimistic concurrency check using updatedAt.
+  
+  Shows last 5 history entries.
 
-Filters synced to URL (city, propertyType, status, timeline).
+-CSV Import/Export
 
-Debounced search (fullName|phone|email).
+  Row-level validation (show errors in table).
+  
+  Transactional insert of valid rows only.
+  
+  Export applies current filters/search/sort.
 
-Sort by updatedAt desc.
+**Auth & Ownership**
 
-Row actions: View / Edit.
+-Supabase Auth (magic link or demo login).
 
-View & Edit – /buyers/[id]
+-Any logged-in user can read all buyers.
 
-Edit form with same validation rules.
+-Users can edit/delete only their own (ownerId).
 
-Optimistic concurrency check using updatedAt.
 
-Shows last 5 history entries.
+**Validation & Safety**
 
-CSV Import/Export
+-Zod validation both client & server.
 
-Import max 200 rows with headers:
+-Budget validation: budgetMax ≥ budgetMin.
 
-fullName,email,phone,city,propertyType,bhk,purpose,budgetMin,budgetMax,timeline,source,notes,tags,status
+-Conditional validation: bhk required for Apartment/Villa.
 
+-Rate limiting on create/update (simple per-user/IP).
 
-Row-level validation (show errors in table).
+-Ownership enforcement at API layer.
 
-Transactional insert of valid rows only.
+**Database**
 
-Export applies current filters/search/sort.
+-Supabase provides Postgres.
 
-🔑 Auth & Ownership
+-Run migrations (via SQL or Supabase migration tool).
 
-Supabase Auth (magic link or demo login).
+-Schema includes:
 
-Any logged-in user can read all buyers.
+  buyers
+  
+  buyer_history
+  
+  users (handled by Supabase Auth)
 
-Users can edit/delete only their own (ownerId).
 
-✨ Nice-to-haves (implemented/skipped)
+**Design Notes**
 
-✅ Tag chips with typeahead
+-Validation lives in a shared schemas/ folder (Zod) → reused on client + server.
 
-✅ Status quick-actions in table
+-SSR for listing with filters/search/sort handled server-side.
 
-⏳ Full-text search (planned but skipped)
+-Ownership checks enforced in Supabase policies.
 
-⏳ File upload (attachmentUrl)
+-Buyer history maintained by triggers or app logic.
 
-⚖️ Validation & Safety
+**What’s Done vs Skipped
+Done**
 
-Zod validation both client & server.
+-Full CRUD with validation
 
-Budget validation: budgetMax ≥ budgetMin.
+-Pagination, search, filters, sort
 
-Conditional validation: bhk required for Apartment/Villa.
+-Import/export with validation
 
-Rate limiting on create/update (simple per-user/IP).
+-Ownership checks via Supabase policies
 
-Ownership enforcement at API layer.
+-Unit test (CSV row validator)
 
-🧪 Testing
+-Accessibility basics (labels, focus, ARIA for errors)
 
-Unit test: CSV row validator (checks budget rule & enums).
+**Skipped**
 
-Run tests:
+-Advanced full-text search
 
-npm run test
+-File uploads (attachmentUrl)
 
-🛠️ Setup & Run Locally
-1. Clone & Install
-git clone https://github.com/your-username/buyer-leads-app.git
-cd buyer-leads-app
-npm install
-
-2. Env Vars
-
-Create .env.local with:
-
-VITE_SUPABASE_URL=your-supabase-url
-VITE_SUPABASE_ANON_KEY=your-anon-key
-
-3. Database
-
-Supabase provides Postgres.
-
-Run migrations (via SQL or Supabase migration tool).
-
-Schema includes:
-
-buyers
-
-buyer_history
-
-users (handled by Supabase Auth)
-
-4. Start Dev Server
-npm run dev
-
-
-App runs on http://localhost:5173.
-
-📐 Design Notes
-
-Validation lives in a shared schemas/ folder (Zod) → reused on client + server.
-
-SSR for listing with filters/search/sort handled server-side.
-
-Ownership checks enforced in Supabase policies.
-
-Buyer history maintained by triggers or app logic.
-
-✅ What’s Done vs Skipped
-Done
-
-Full CRUD with validation
-
-Pagination, search, filters, sort
-
-Import/export with validation
-
-Ownership checks via Supabase policies
-
-Unit test (CSV row validator)
-
-Accessibility basics (labels, focus, ARIA for errors)
-
-Skipped
-
-Advanced full-text search
-
-File uploads (attachmentUrl)
-
-Admin role (only owner-based auth enforced)
+-Admin role (only owner-based auth enforced)
