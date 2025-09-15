@@ -26,17 +26,17 @@ Testing: Vitest (unit tests)
 **Features**
 *Buyers (Leads)*
 
--Capture buyer details with Zod-based validation (client + server).
++Capture buyer details with Zod-based validation (client + server).
 
--Enums for city, propertyType, bhk, purpose, timeline, source, status.
++Enums for city, propertyType, bhk, purpose, timeline, source, status.
 
--Ownership: users can only edit/delete their own buyers (ownerId).
++Ownership: users can only edit/delete their own buyers (ownerId).
 
--Buyer history table tracks last 5 changes (field, old → new, timestamp, user).
++Buyer history table tracks last 5 changes (field, old → new, timestamp, user).
 
 *Pages & Flows*
 
--Create Lead – /buyers/new
++Create Lead – /buyers/new
 
   Form with validation: name, phone, city, propertyType, etc.
   
@@ -44,7 +44,7 @@ Testing: Vitest (unit tests)
   
   On submit → creates record + buyer_history entry.
 
--List & Search – /buyers
++List & Search – /buyers
 
   Server-side pagination (10/page).
   
@@ -56,7 +56,7 @@ Testing: Vitest (unit tests)
   
   Row actions: View / Edit.
 
--View & Edit – /buyers/[id]
++View & Edit – /buyers/[id]
 
   Edit form with same validation rules.
   
@@ -64,7 +64,7 @@ Testing: Vitest (unit tests)
   
   Shows last 5 history entries.
 
--CSV Import/Export
++CSV Import/Export
 
   Row-level validation (show errors in table).
   
@@ -74,32 +74,32 @@ Testing: Vitest (unit tests)
 
 **Auth & Ownership**
 
--Supabase Auth (magic link or demo login).
++Supabase Auth (magic link or demo login).
 
--Any logged-in user can read all buyers.
++Any logged-in user can read all buyers.
 
--Users can edit/delete only their own (ownerId).
++Users can edit/delete only their own (ownerId).
 
 
 **Validation & Safety**
 
--Zod validation both client & server.
++Zod validation both client & server.
 
--Budget validation: budgetMax ≥ budgetMin.
++Budget validation: budgetMax ≥ budgetMin.
 
--Conditional validation: bhk required for Apartment/Villa.
++Conditional validation: bhk required for Apartment/Villa.
 
--Rate limiting on create/update (simple per-user/IP).
++Rate limiting on create/update (simple per-user/IP).
 
--Ownership enforcement at API layer.
++Ownership enforcement at API layer.
 
 **Database**
 
--Supabase provides Postgres.
++Supabase provides Postgres.
 
--Run migrations (via SQL or Supabase migration tool).
++Run migrations (via SQL or Supabase migration tool).
 
--Schema includes:
++Schema includes:
 
   buyers
   
@@ -110,33 +110,33 @@ Testing: Vitest (unit tests)
 
 **Design Notes**
 
--Validation lives in a shared schemas/ folder (Zod) → reused on client + server.
++Validation lives in a shared schemas/ folder (Zod) → reused on client + server.
 
--SSR for listing with filters/search/sort handled server-side.
++SSR for listing with filters/search/sort handled server-side.
 
--Ownership checks enforced in Supabase policies.
++Ownership checks enforced in Supabase policies.
 
--Buyer history maintained by triggers or app logic.
++Buyer history maintained by triggers or app logic.
 
 **What’s Done vs Skipped
 Done**
 
--Full CRUD with validation
++Full CRUD with validation
 
--Pagination, search, filters, sort
++Pagination, search, filters, sort
 
--Import/export with validation
++Import/export with validation
 
--Ownership checks via Supabase policies
++Ownership checks via Supabase policies
 
--Unit test (CSV row validator)
++Unit test (CSV row validator)
 
--Accessibility basics (labels, focus, ARIA for errors)
++Accessibility basics (labels, focus, ARIA for errors)
 
 **Skipped**
 
--Advanced full-text search
++Advanced full-text search
 
--File uploads (attachmentUrl)
++File uploads (attachmentUrl)
 
 -Admin role (only owner-based auth enforced)
