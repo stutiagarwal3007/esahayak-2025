@@ -3,24 +3,27 @@
 A lightweight Buyer Lead Intake & Management app built with Vite + React + TypeScript + shadcn-ui + Tailwind CSS + Supabase.
 It allows capturing, listing, searching, editing, and managing buyer leads with validation, history tracking, and CSV import/export.
 
-Tech Stack
+🚀 Tech Stack
 
 Frontend: Vite
  + React
  + TypeScript
 
-UI: Tailwind CSS
+UI: shadcn-ui
+ + Tailwind CSS
 
 Database & Auth: Supabase
  (Postgres + Auth)
 
 Validation: Zod
 
-State/Data: Supabase client + React Query 
+State/Data: Supabase client + React Query (if added)
 
-CSV Handling: Papaparse
-Testing: Vitest 
+CSV Handling: Papaparse (or custom util)
 
+Testing: Vitest (unit tests)
+
+📦 Features
 Buyers (Leads)
 
 Capture buyer details with Zod-based validation (client + server).
@@ -62,21 +65,37 @@ Optimistic concurrency check using updatedAt.
 Shows last 5 history entries.
 
 CSV Import/Export
+
+Import max 200 rows with headers:
+
+fullName,email,phone,city,propertyType,bhk,purpose,budgetMin,budgetMax,timeline,source,notes,tags,status
+
+
 Row-level validation (show errors in table).
 
 Transactional insert of valid rows only.
 
 Export applies current filters/search/sort.
 
-Auth & Ownership
+🔑 Auth & Ownership
 
 Supabase Auth (magic link or demo login).
 
 Any logged-in user can read all buyers.
 
-Users can edit/delete only their own
+Users can edit/delete only their own (ownerId).
 
-Validation & Safety
+✨ Nice-to-haves (implemented/skipped)
+
+✅ Tag chips with typeahead
+
+✅ Status quick-actions in table
+
+⏳ Full-text search (planned but skipped)
+
+⏳ File upload (attachmentUrl)
+
+⚖️ Validation & Safety
 
 Zod validation both client & server.
 
@@ -88,7 +107,48 @@ Rate limiting on create/update (simple per-user/IP).
 
 Ownership enforcement at API layer.
 
-Design Notes
+🧪 Testing
+
+Unit test: CSV row validator (checks budget rule & enums).
+
+Run tests:
+
+npm run test
+
+🛠️ Setup & Run Locally
+1. Clone & Install
+git clone https://github.com/your-username/buyer-leads-app.git
+cd buyer-leads-app
+npm install
+
+2. Env Vars
+
+Create .env.local with:
+
+VITE_SUPABASE_URL=your-supabase-url
+VITE_SUPABASE_ANON_KEY=your-anon-key
+
+3. Database
+
+Supabase provides Postgres.
+
+Run migrations (via SQL or Supabase migration tool).
+
+Schema includes:
+
+buyers
+
+buyer_history
+
+users (handled by Supabase Auth)
+
+4. Start Dev Server
+npm run dev
+
+
+App runs on http://localhost:5173.
+
+📐 Design Notes
 
 Validation lives in a shared schemas/ folder (Zod) → reused on client + server.
 
@@ -98,7 +158,7 @@ Ownership checks enforced in Supabase policies.
 
 Buyer history maintained by triggers or app logic.
 
-What’s Done vs Skipped
+✅ What’s Done vs Skipped
 Done
 
 Full CRUD with validation
