@@ -5,7 +5,7 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Frontend:** Vite + React + TypeScript  
 - **UI:** shadcn-ui + Tailwind CSS  
@@ -17,7 +17,7 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 
 ---
 
-## ✨ Features
+## Features
 
 ### Buyers (Leads)
 - Capture buyer details with **Zod-based validation** (client + server).  
@@ -26,38 +26,38 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 - Buyer history table tracks last 5 changes (field, old → new, timestamp, user).  
 
 ### Pages & Flows
-#### ➕ Create Lead – `/buyers/new`
+####  Create Lead – `/buyers/new`
 - Form with validation: name, phone, city, propertyType, etc.  
 - Conditional field: `bhk` required only for Apartment/Villa.  
 - On submit → creates record + `buyer_history` entry.  
 
-#### 📋 List & Search – `/buyers`
+####  List & Search – `/buyers`
 - Server-side pagination (10/page).  
 - Filters synced to URL (`city`, `propertyType`, `status`, `timeline`).  
 - Debounced search (`fullName|phone|email`).  
 - Sort by `updatedAt` desc.  
 - Row actions: **View / Edit**.  
 
-#### 👀 View & Edit – `/buyers/[id]`
+####  View & Edit – `/buyers/[id]`
 - Edit form with same validation rules.  
 - Optimistic concurrency check using `updatedAt`.  
 - Shows last 5 history entries.  
 
-#### 📂 CSV Import/Export
+####  CSV Import/Export
 - Row-level validation (show errors in table).  
 - Transactional insert of valid rows only.  
 - Export applies current filters/search/sort.  
 
 ---
 
-## 🔑 Auth & Ownership
+##  Auth & Ownership
 - Supabase Auth (magic link or demo login).  
 - Any logged-in user can **read all buyers**.  
 - Users can **edit/delete only their own** (`ownerId`).  
 
 ---
 
-## 🛡️ Validation & Safety
+##  Validation & Safety
 - Zod validation both client & server.  
 - Budget validation: `budgetMax ≥ budgetMin`.  
 - Conditional validation: `bhk` required for Apartment/Villa.  
@@ -66,7 +66,7 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 
 ---
 
-## 🗄️ Database
+##  Database
 - Supabase provides Postgres.  
 - Run migrations (via SQL or Supabase migration tool).  
 
@@ -77,7 +77,7 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 
 ---
 
-## 📝 Design Notes
+##  Design Notes
 - Validation lives in a shared `schemas/` folder (Zod) → reused on client + server.  
 - SSR for listing with filters/search/sort handled server-side.  
 - Ownership checks enforced in Supabase policies.  
@@ -85,7 +85,7 @@ It allows capturing, listing, searching, editing, and managing buyer leads with 
 
 ---
 
-## ✅ What’s Done vs Skipped
+##  What’s Done vs Skipped
 
 ### Done
 - Full CRUD with validation  
